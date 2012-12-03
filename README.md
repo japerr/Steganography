@@ -8,8 +8,17 @@ Library which allows multiple different carrier streams to be used as one contin
     ICarrierStreamFactory factory = new CarrierStreamFactory();
     factory.RegisterCarrierStreams();
 
+    IList<Stream> carrierFiles = new List<Stream>
+    {
+    	File.Open("1_Carrier_File", FileMode.Open),
+    	File.Open("2_Carrier_File", FileMode.Open),
+    	File.Open("3_Carrier_File", FileMode.Open),
+    	File.Open("4_Carrier_File", FileMode.Open),
+    	File.Open("5_Carrier_File", FileMode.Open)
+    };
+		
     using (Stream carrierClusterStream = factory.BuildClusterStream<CarrierClusterStream>(
-    	new OneKeySequence(), new List<Stream>{ File.Open("A_Carrier_File", FileMode.Open) }))
+    	new OneKeySequence(), carrierFiles))
     {
     	//.... Use the new carrierClusterStream like a regular stream
     }
@@ -21,3 +30,5 @@ Library which allows multiple different carrier streams to be used as one contin
 ### Code Coverage Reports
 
 	Run: Tests\CodeCoverage\build-reports.bat
+	
+	The open anyone of the html reports located in the CoverageReports folder.

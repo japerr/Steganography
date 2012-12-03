@@ -31,4 +31,4 @@ Library which allows multiple different carrier streams to be used as one contin
 
 	Run: Tests\CodeCoverage\build-reports.bat
 	
-	The open anyone of the html reports located in the CoverageReports folder.
+	Then open anyone of the html reports located in the CoverageReports folder.

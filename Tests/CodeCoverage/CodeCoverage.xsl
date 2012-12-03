@@ -9,6 +9,7 @@
         <xsl:param name="mediumCoverage" select="70" />
 
 		<xsl:if test="//CoverageDSPriv">
+			<xsl:variable name="projectName">Steganography</xsl:variable>
 			<xsl:variable name="module" select="//CoverageDSPriv/Module" />
 			<xsl:variable name="totalAssemblies" select="count($module)" />
 			<xsl:variable name="totalFiles" select="count(//CoverageDSPriv/SourceFileNames)" />
@@ -20,7 +21,7 @@
 			<xsl:variable name="overallCoverage" select="($totalBlocksCovered div ($totalBlocksCovered + $totalBlocksNotCovered)) * 100" />
 			<html>
 				<head>
-					<title>Steganography Code Coverage</title>
+					<title><xsl:value-of select="$projectName" /> Code Coverage</title>
 					<style>
 						html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,select,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,button,caption,cite,code,dfn,em,input,optgroup,option,select,strong,textarea,th,var{font:inherit}del,ins{text-decoration:none}li{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:baseline}sub{vertical-align:baseline}legend{color:#000}
 
@@ -53,7 +54,7 @@
 				<body>
 					<div id="container">
 						<div id="header">
-							<h1>Steganography Code Coverage Report</h1>
+							<h1><xsl:value-of select="$projectName" /> Code Coverage Report</h1>
 						</div>
 						<div id="content-container">
 							<div id="aside">
@@ -255,7 +256,7 @@
 								</xsl:for-each>
 							</div>
 							<div id="footer">
-								Copyright © Calmena, 2012
+								Powered by Japerr.com
 							</div>
 						</div>
 					</div>

@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E2515E64-E4D3-40F6-B39B-2F83855570BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Steganography.IO.UnitTests</RootNamespace>
+    <AssemblyName>Steganography.IO.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GuidKeySequenceTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BaseKeySequenceTest.cs" />
+    <Compile Include="Bmp\BmpCarrierStreamTests.cs" />
+    <Compile Include="Bmp\StructureTests.cs" />
+    <Compile Include="CarrierStreamMissingMagicNumberAttributeExceptionTests.cs" />
+    <Compile Include="Implementation\StreamSegmentMultipleTests.cs" />
+    <Compile Include="Implementation\StreamSegmentTests.cs" />
+    <Compile Include="Png\PngCarrierStreamTests.cs" />
+    <Compile Include="StringKeySequenceTests.cs" />
+    <Compile Include="EulersKeySequenceTests.cs" />
+    <Compile Include="PiKeySequenceTests.cs" />
+    <Compile Include="OneKeySequenceTests.cs" />
+    <Compile Include="DuplicateMagicNumberDefinedExceptionTests.cs" />
+    <Compile Include="Implementation\CarrierClusterStreamTests.cs" />
+    <Compile Include="Implementation\CarrierStreamFactoryTests.cs" />
+    <Compile Include="MagicNumberAttributeTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Bmp\Resources\Bad\badbitcount.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\badbitssize.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\baddens1.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\baddens2.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\badfilesize.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\badheadersize.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\badpalettesize.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\badplanes.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\badrle.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\badwidth.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\pal2.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\pal8badindex.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\reallybig.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\rletopdown.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Bad\shortfile.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal1.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal1bg.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal1wb.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal4.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal4rle.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8-0.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8nonsquare.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8rle.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8topdown.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8v2.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8v4.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8v5.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8w124.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8w125.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\pal8w126.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\rgb16-565.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\rgb16-565pal.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\rgb16.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\rgb24.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\rgb24pal.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\rgb32.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Good\rgb32bf.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\pal1p1.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\pal4rletrns.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\pal8offs.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\pal8oversizepal.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\pal8rletrns.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgb16-231.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgb24jpeg.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgb24largepal.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgb24png.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgb32-111110.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgb32fakealpha.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgba16-4444.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgba32.bmp" />
+    <EmbeddedResource Include="Bmp\Resources\Questionable\rgba32abf.bmp" />
+    <Content Include="Bmp\Resources\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\IO\Steganography.IO.csproj">
+      <Project>{a88dbd15-84df-44a9-ba17-6a1b10738a5f}</Project>
+      <Name>Steganography.IO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,1 @@
+﻿Bitmap Test Images: https://github.com/jsummers/bmpsuite

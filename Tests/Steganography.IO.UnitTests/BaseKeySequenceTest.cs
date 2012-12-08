@@ -2,7 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 
-namespace Steganography.IO.Tests
+namespace Steganography.IO.UnitTests
 {
 	public abstract class BaseKeySequenceTest
 	{

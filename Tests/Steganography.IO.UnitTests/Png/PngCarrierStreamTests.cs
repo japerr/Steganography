@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Steganography.IO.Png;
 
-namespace Steganography.IO.Tests.Png
+namespace Steganography.IO.UnitTests.Png
 {
 	[TestFixture]
 	public class PngCarrierStreamTests

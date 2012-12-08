@@ -46,11 +46,11 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bmp\FileHeaderTests.cs" />
     <Compile Include="GuidKeySequenceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseKeySequenceTest.cs" />
     <Compile Include="Bmp\BmpCarrierStreamTests.cs" />
-    <Compile Include="Bmp\StructureTests.cs" />
     <Compile Include="CarrierStreamMissingMagicNumberAttributeExceptionTests.cs" />
     <Compile Include="Implementation\StreamSegmentMultipleTests.cs" />
     <Compile Include="Implementation\StreamSegmentTests.cs" />

@@ -55,7 +55,6 @@
     <Compile Include="Bmp\V2InfoHeader.cs" />
     <Compile Include="Bmp\FileHeader.cs" />
     <Compile Include="Bmp\InfoHeader.cs" />
-    <Compile Include="Bmp\Structure.cs" />
     <Compile Include="Bmp\DIBHeaderTypes.cs" />
     <Compile Include="ByteArrayKeySequence.cs" />
     <Compile Include="Bmp\BmpCarrierStream.cs" />

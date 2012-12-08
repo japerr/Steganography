@@ -14,11 +14,11 @@ namespace Steganography.IO.Bmp
 		/// <summary>
 		/// Size of the BMP file in bytes
 		/// </summary>
-		int Size { get; set; }
+		public int Size { get; set; }
 		/// <summary>
 		/// The offset, i.e. starting address, of the byte where the bitmap image data (pixel array) can be found.
 		/// </summary>
-		int PixelArrayOffset { get; set; }
+		public int PixelArrayOffset { get; set; }
 
 		/// <summary>
 		/// Constructor initialized with the bitmap header info

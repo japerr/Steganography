@@ -285,7 +285,7 @@ namespace Steganography.IO.Implementation
 			ParallelQuery<StreamSegment> intersections = _carrierStreams
 				.AsParallel()
 				.Where(i => i.Intersects(Position, Position + count));
-
+			
 			_logger.Debug(h => h("GetIntersectingStreams: Count = {0}, Intersection Count = {1}",
 				count, intersections.Count()));
 

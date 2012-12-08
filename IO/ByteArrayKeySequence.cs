@@ -18,10 +18,6 @@ namespace Steganography.IO
 		/// </summary>
 		private readonly int _totalStepSum;
 		/// <summary>
-		/// Key buffer length
-		/// </summary>
-		private readonly int _length;
-		/// <summary>
 		/// Total step sum accessor
 		/// </summary>
 		public int TotalStepSum
@@ -38,7 +34,7 @@ namespace Steganography.IO
 		{
 			get
 			{
-				return _length;
+				return _keyBuffer.Length;
 			}
 		}
 
@@ -53,22 +49,22 @@ namespace Steganography.IO
 			_keyBuffer = key;
 
 			_totalStepSum = _keyBuffer.Sum(b => (int)b);
-
-			_length = _keyBuffer.Length;
 		}
 
 		/// <summary>
 		/// Get a sub set of the infinite sequence
 		/// </summary>
-		/// <param name="startAt">Index to start from</param>
+		/// <param name="index">Index to start from</param>
 		/// <param name="count">Size of the sub sequence</param>
 		/// <returns>Enumerable of bytes</returns>
-		public IEnumerable<byte> GetSequence(int startAt, int count)
+		public IEnumerable<byte> GetSequence(long index, int count)
 		{
-			if (startAt % Length + count < Length)
-				return _keyBuffer.Skip(startAt % Length).Take(count).ToList();
+			int skip = (int)(index % (long)Length);
 
-			List<byte> result = _keyBuffer.Skip(startAt % Length).ToList();
+			if (index % Length + count < Length)
+				return _keyBuffer.Skip(skip).Take(count).ToList();
+
+			List<byte> result = _keyBuffer.Skip(skip).ToList();
 			count -= result.Count;
 			for (int i = 0; i < count / Length; ++i)
 				result.AddRange(_keyBuffer);

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Steganography.IO;
 
-namespace Steganography.IO.Tests
+namespace Steganography.IO.UnitTests
 {
 	[TestFixture]
 	public class MagicNumberAttributeTests

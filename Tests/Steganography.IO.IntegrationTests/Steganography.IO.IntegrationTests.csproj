@@ -63,6 +63,14 @@
       <Project>{a88dbd15-84df-44a9-ba17-6a1b10738a5f}</Project>
       <Name>Steganography.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Providers\Steganography.IO.Sequences\Steganography.IO.Sequences.csproj">
+      <Project>{89db03bc-3847-465f-94a3-6f51a60297c1}</Project>
+      <Name>Steganography.IO.Sequences</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Steganography\Steganography.csproj">
+      <Project>{3e27ed9b-adf6-4963-8ee3-627cd24c55e0}</Project>
+      <Name>Steganography</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

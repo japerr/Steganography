@@ -35,45 +35,21 @@
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="CuttingEdge.Conditions">
-      <HintPath>..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.ComponentModel.Composition" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BaseCarrierClusterStream.cs" />
     <Compile Include="BaseCarrierStream.cs" />
-    <Compile Include="Binary\BinaryCarrierStream.cs" />
-    <Compile Include="Bmp\BGRA.cs" />
-    <Compile Include="Bmp\ColorTable.cs" />
-    <Compile Include="Bmp\CompressionTypes.cs" />
-    <Compile Include="Bmp\UnsupportedDIBHeaderTypeException.cs" />
-    <Compile Include="Bmp\V3InfoHeader.cs" />
-    <Compile Include="Bmp\V4InfoHeader.cs" />
-    <Compile Include="Bmp\V5InfoHeader.cs" />
-    <Compile Include="Bmp\V2InfoHeader.cs" />
-    <Compile Include="Bmp\FileHeader.cs" />
-    <Compile Include="Bmp\InfoHeader.cs" />
-    <Compile Include="Bmp\DIBHeaderTypes.cs" />
-    <Compile Include="ByteArrayKeySequence.cs" />
-    <Compile Include="Bmp\BmpCarrierStream.cs" />
-    <Compile Include="GuidKeySequence.cs" />
-    <Compile Include="Implementation\StreamSegment.cs" />
-    <Compile Include="OneKeySequence.cs" />
-    <Compile Include="DuplicateMagicNumberDefinedException.cs" />
-    <Compile Include="EulersNumberKeySequence.cs" />
+    <Compile Include="CarrierClusterStreamAttribute.cs" />
+    <Compile Include="ICarrierClusterStreamMetadata.cs" />
+    <Compile Include="ICarrierStreamMetadata.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IKeySequence.cs" />
     <Compile Include="ICarrierClusterStream.cs" />
     <Compile Include="ICarrierStream.cs" />
     <Compile Include="ICarrierStreamFactory.cs" />
-    <Compile Include="MagicNumberAttribute.cs" />
-    <Compile Include="PiKeySequence.cs" />
-    <Compile Include="Png\PngCarrierStream.cs" />
-    <Compile Include="Implementation\CarrierClusterStream.cs" />
-    <Compile Include="Implementation\CarrierStreamFactory.cs" />
-    <Compile Include="CarrierStreamMissingMagicNumberAttributeException.cs" />
-    <Compile Include="StringKeySequence.cs" />
+    <Compile Include="CarrierStreamAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

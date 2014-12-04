@@ -1,12 +1,13 @@
-﻿using System;
+﻿using DiscUtils;
+using DiscUtils.Fat;
+using Steganography;
+using Steganography.IO;
+using Steganography.IO.Sequences;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using DiscUtils;
-using DiscUtils.Fat;
-using Steganography.IO;
-using Steganography.IO.Implementation;
 
 namespace ClusterDisc
 {
@@ -15,14 +16,15 @@ namespace ClusterDisc
 		private static string CLUSTER_DISC_DIRECTORY = Path.Combine(
 			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ClusterFiles");
 
+		private static string CARRIER_STREAM_PLUGINS_DIRECTORY = Path.Combine(
+			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Plugins");
+
 		private static string CLUSTER_FILENAME = "File";
 		
 		static void Main(string[] args)
 		{
-			ICarrierStreamFactory factory = new CarrierStreamFactory();
-			factory.RegisterCarrierStreams();
-
-			using (Stream carrierClusterStream = factory.BuildClusterStream<CarrierClusterStream>(
+			ICarrierStreamFactory factory = new CarrierStreamFactory(CARRIER_STREAM_PLUGINS_DIRECTORY);
+			using (Stream carrierClusterStream = factory.BuildClusterStream("Basic",
 				new OneKeySequence(), GetClusterFiles()))
 			{
 				DiscUtils.FileSystemInfo[] fsInfos = FileSystemManager.DetectDefaultFileSystems(carrierClusterStream);

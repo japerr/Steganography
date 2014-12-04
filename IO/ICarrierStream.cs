@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Steganography.IO
 {
@@ -27,6 +28,11 @@ namespace Steganography.IO
 		/// </summary>
 		long Length { get; }
 
+		/// <summary>
+		/// Initialization method which sets the backing stream
+		/// </summary>
+		/// <param name="stream">Backing stream</param>
+		void Initialize(Stream stream);
 		/// <summary>
 		/// Read a given number of bytes from the current stream position
 		/// </summary>

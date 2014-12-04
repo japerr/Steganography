@@ -9,7 +9,7 @@ namespace Steganography.IO.UnitTests
 		[Test]
 		public void MagicNumber_Property_Set_Correctly()
 		{
-			MagicNumberAttribute attribute = new MagicNumberAttribute(new byte[] { 0x04, 0x14 });
+			CarrierStreamAttribute attribute = new CarrierStreamAttribute(new byte[] { 0x04, 0x14 });
 
 			Assert.AreEqual(new byte[] { 0x04, 0x14 }, attribute.MagicNumber);
 		}

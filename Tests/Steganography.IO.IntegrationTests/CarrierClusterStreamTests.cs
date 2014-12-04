@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using NUnit.Framework;
+using Steganography.IO.Sequences;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using NUnit.Framework;
-using Steganography.IO;
-using Steganography.IO.Implementation;
 
 namespace Steganography.IO.IntegrationTests
 {

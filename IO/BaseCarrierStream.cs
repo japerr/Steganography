@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Common.Logging;
-using CuttingEdge.Conditions;
+using System;
 
 namespace Steganography.IO
 {
@@ -16,7 +16,7 @@ namespace Steganography.IO
 		/// <summary>
 		/// Logger instance
 		/// </summary>
-		protected ILog Logger 
+		protected ILog Logger
 		{
 			get
 			{
@@ -67,16 +67,19 @@ namespace Steganography.IO
 		public long Length { get; protected set; }
 
 		/// <summary>
-		/// Constructor initialized with the backing stream
+		/// Initialization method which sets the backing stream
 		/// </summary>
-		/// <param name="stream">Backing stream instance</param>
-		public BaseCarrierStream(Stream stream)
+		/// <param name="stream">Backing stream</param>
+		public virtual void Initialize(Stream stream)
 		{
-			Condition.Requires(stream).IsNotNull();
+			if (stream == null)
+				throw new ArgumentNullException("stream");
+
+			if(BackingStream != null)
+				throw new InvalidOperationException("CarrierStream is already initialized.");
 
 			BackingStream = stream;
 		}
-
 		/// <summary>
 		/// Read a given number of bytes from the current stream position
 		/// </summary>

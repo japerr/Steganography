@@ -11,20 +11,20 @@ namespace Steganography.IO
 	/// </remarks>
 	[MetadataAttribute]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-	public class CarrierStreamAttribute : ExportAttribute
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+	public class CarrierStreamAttribute : ExportAttribute, ICarrierStreamMetadata
 	{
 		/// <summary>
 		/// Magic number byte array
 		/// </summary>
-		public byte[] MagicNumber { get; set; }
+		public byte[] MagicNumber { get; private set; }
 
 		/// <summary>
 		/// Constructor initialized with the magic number byte array
 		/// </summary>
 		/// <param name="magicNumber">Magic number byte array</param>
 		public CarrierStreamAttribute(byte[] magicNumber)
-			:base(typeof(ICarrierStream))
+			:base(typeof(BaseCarrierStream))
 		{
 			MagicNumber = magicNumber;
 		}

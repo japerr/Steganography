@@ -8,20 +8,20 @@ namespace Steganography.IO
 	/// </summary>
 	[MetadataAttribute]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-	public class CarrierClusterStreamAttribute : ExportAttribute
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+	public class CarrierClusterStreamAttribute : ExportAttribute, ICarrierClusterStreamMetadata
 	{
 		/// <summary>
 		/// Cluster name
 		/// </summary>
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
 		/// <summary>
 		/// Constructor initialized with the cluster name
 		/// </summary>
 		/// <param name="name">Cluster name</param>
 		public CarrierClusterStreamAttribute(string name)
-			: base(typeof(ICarrierClusterStream))
+			: base(typeof(BaseCarrierClusterStream))
 		{
 			Name = name;
 		}

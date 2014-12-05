@@ -1,16 +1,13 @@
-﻿using Steganography.IO;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Text;
+using Steganography.IO;
 
 namespace Steganography
 {
@@ -24,6 +21,16 @@ namespace Steganography
 		/// </summary>
 		private bool _requireClusterStreams = true;
 		/// <summary>
+		/// imported carrier cluster streams and thier metadata
+		/// </summary>
+		[ImportMany(typeof(BaseCarrierClusterStream), RequiredCreationPolicy = CreationPolicy.NonShared)]
+		private ExportFactory<BaseCarrierClusterStream, ICarrierClusterStreamMetadata>[] _carrierClusterStreams { get; set; }
+		/// <summary>
+		/// imported carrier streams and thier metadata
+		/// </summary>
+		[ImportMany(typeof(BaseCarrierStream), RequiredCreationPolicy = CreationPolicy.NonShared)]
+		private ExportFactory<BaseCarrierStream, ICarrierStreamMetadata>[] _carrierStreams { get; set; }
+		/// <summary>
 		/// Dictionary of names and carrier cluster stream types
 		/// </summary>
 		private ConcurrentDictionary<string, ExportFactory<BaseCarrierClusterStream, ICarrierClusterStreamMetadata>> _carrierClusterStreamTypes =
@@ -35,38 +42,38 @@ namespace Steganography
 			new ConcurrentDictionary<byte[], ExportFactory<BaseCarrierStream, ICarrierStreamMetadata>>();		
 
 		/// <summary>
-		/// Constructor initialized with the plugin directory. 
-		/// The providers in the plugin directory the registered
+		/// Constructor initialized with the provider directory. 
+		/// The providers in the provider directory the registered
 		/// </summary>
-		/// <param name="pluginDirectory">Plugin directory</param>
+		/// <param name="providerDirectory">Provider directory</param>
 		/// <param name="requireClusterStreams">
 		///	Flag indicating that cluster stream existance should be enforced.
 		///	If true and no ICarrierClusterStream implementations are found, a NoCarrierClusterStreamsFoundException is thrown.
 		///	No exception is thrown if false and no ICarrierClusterStream implementations are found.
 		///	</param>
-		///	<exception cref="System.ArgumentNullException">Thrown if pluginDirectory is null</exception>
+		///	<exception cref="System.ArgumentNullException">Thrown if providerDirectory is null</exception>
 		///	<exception cref="System.ArgumentException">
 		///	Thrown when:
-		///		the pluginDirectory is empty or whitespace
-		///		the pluginDirectory is not a valid or existing directory
-		///		the pluginDirectory is not readable directory
+		///		the providerDirectory is empty or whitespace
+		///		the providerDirectory is not a valid or existing directory
+		///		the providerDirectory is not readable directory
 		///	</exception>
-		public CarrierStreamFactory(string pluginDirectory, bool requireClusterStreams = true)
+		public CarrierStreamFactory(string providerDirectory, bool requireClusterStreams = true)
 		{
-			if(pluginDirectory == null)
-				throw new ArgumentNullException("pluginDirectory");
+			if(providerDirectory == null)
+				throw new ArgumentNullException("providerDirectory");
 
-			if(string.IsNullOrWhiteSpace(pluginDirectory))
-				throw new ArgumentException("pluginDirectory", "pluginDirectory cannot be empty or white space.");
+			if(string.IsNullOrWhiteSpace(providerDirectory))
+				throw new ArgumentException("providerDirectory", "pluginDirectory cannot be empty or white space.");
 
-			if(!Directory.Exists(pluginDirectory))
-				throw new ArgumentException("pluginDirectory", "pluginDirectory is not a valid or existing directory.");
+			if(!Directory.Exists(providerDirectory))
+				throw new ArgumentException("providerDirectory", "pluginDirectory is not a valid or existing directory.");
 
-			if(CanReadDirectory(pluginDirectory))
-				throw new ArgumentException("pluginDirectory", "Unable to read from specified pluginDirectory");
+			if(!CanReadDirectory(providerDirectory))
+				throw new ArgumentException("providerDirectory", "Unable to read from specified pluginDirectory");
 
 			_requireClusterStreams = requireClusterStreams;
-			RegisterCarrierProviders(pluginDirectory);
+			RegisterCarrierProviders(providerDirectory);
 		}
 
 		/// <summary>
@@ -101,36 +108,32 @@ namespace Steganography
 			return readAllow && !readDeny;
 		}
 		/// <summary>
-		/// Register all the ICarrierClusterStream and ICarrierStream implementations defined in the pluginDirectory
+		/// Register all the ICarrierClusterStream and ICarrierStream implementations defined in the providerDirectory
 		/// </summary>
-		/// <param name="pluginDirectory">Plugin directory to scan for carrier implmentations</param>
-		/// <exception cref="Steganography.NoCarrierClusterStreamsFoundException">Thrown when no ICarrierClusterStreams are found and cluster streams are required.</exception>
+		/// <param name="providerDirectory">Provider directory to scan for carrier implmentations</param>
+		/// <exception cref="Steganography.NoCarrierClusterStreamsFoundException">
+		///		Thrown when no ICarrierClusterStreams are found and cluster streams are required.
+		///	</exception>
 		/// <exception cref="Steganography.NoCarrierStreamsFoundException">Thrown when no ICarrierStreams are found.</exception>
-		private void RegisterCarrierProviders(string pluginDirectory)
+		private void RegisterCarrierProviders(string providerDirectory)
 		{
 			CompositionContainer container = new CompositionContainer(
-				new AggregateCatalog(new DirectoryCatalog(pluginDirectory)));
+				new DirectoryCatalog(providerDirectory), CompositionOptions.DisableSilentRejection);
 
-			StreamContainer<BaseCarrierClusterStream, ICarrierClusterStreamMetadata> carrierClusters =
-				new StreamContainer<BaseCarrierClusterStream, ICarrierClusterStreamMetadata>();
+			container.SatisfyImportsOnce(this);
 
-			StreamContainer<BaseCarrierStream, ICarrierStreamMetadata> carrierStreams =
-				new StreamContainer<BaseCarrierStream, ICarrierStreamMetadata>();
+			if (_requireClusterStreams && _carrierClusterStreams.Count() == 0)
+				throw new NoCarrierClusterStreamsFoundException(providerDirectory);
 
-			container.ComposeParts(carrierClusters, carrierStreams);
+			if (_carrierStreams.Count() == 0)
+				throw new NoCarrierStreamsFoundException(providerDirectory);
 
-			if (_requireClusterStreams && carrierClusters.Streams.Count() == 0)
-				throw new NoCarrierClusterStreamsFoundException(pluginDirectory);
-
-			if (carrierStreams.Streams.Count() == 0)
-				throw new NoCarrierStreamsFoundException(pluginDirectory);
-
-			if(carrierClusters.Streams.Count() > 0)
-				carrierClusters.Streams.ToList()
+			if (_carrierClusterStreams.Count() > 0)
+				_carrierClusterStreams.ToList()
 					.AsParallel()
 					.ForAll(RegisterCarrierClusters);
 
-			carrierStreams.Streams.ToList()
+			_carrierStreams.ToList()
 				.AsParallel()
 				.ForAll(RegisterCarrierStreams);
 		}
@@ -138,7 +141,9 @@ namespace Steganography
 		/// Regsiter the carrier cluster export factory with the internal ConcurrentDictionary
 		/// </summary>
 		/// <param name="factory">ExportFactory instance for the carrier cluster and metadata</param>
-		/// <exception cref="Steganography.DuplicateClusterNameDefinedException">Thrown if an existing ICarrierClusterStream is already defined by the given metadata name.</exception>
+		/// <exception cref="Steganography.DuplicateClusterNameDefinedException">
+		///		Thrown if an existing ICarrierClusterStream is already defined by the given metadata name.
+		///	</exception>
 		private void RegisterCarrierClusters(ExportFactory<BaseCarrierClusterStream, ICarrierClusterStreamMetadata> factory)
 		{
 			Type existingDefinition = _carrierClusterStreamTypes

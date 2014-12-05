@@ -1,10 +1,9 @@
-﻿using Common.Logging;
-using Steganography.IO;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Common.Logging;
 
 namespace Steganography.IO.Basic
 {

@@ -4,7 +4,7 @@ using System.IO;
 namespace Steganography.IO.Bmp
 {
 	/// <summary>
-	/// Carrier stream implementiation with a Bitmap backing store
+	/// Carrier stream implementation with a Bitmap backing store
 	/// </summary>
 	/// <remarks>
 	/// http://en.wikipedia.org/wiki/BMP_file_format
@@ -70,8 +70,8 @@ namespace Steganography.IO.Bmp
 
 			_dibInfoHeader.Initialize(dibHeaderInfo);
 
-			Length = (long)(_dibInfoHeader.BitsPerPixel / 8
-				* _dibInfoHeader.Width * _dibInfoHeader.Height / 8);
+			Length = (long)((decimal)_dibInfoHeader.BitsPerPixel / 8
+				* (decimal)_dibInfoHeader.Width * (decimal)_dibInfoHeader.Height / 8);
 		}
 		/// <summary>
 		/// Read a given number of bytes from the current stream position

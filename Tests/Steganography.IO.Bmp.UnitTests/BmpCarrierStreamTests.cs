@@ -22,7 +22,7 @@ namespace Steganography.IO.Bmp.UnitTests
 			using (BmpCarrierStream bmpCarrierStream = new BmpCarrierStream())
 			{
 				bmpCarrierStream.Initialize(resourceStream);
-				Assert.AreEqual(0, bmpCarrierStream.Length);
+				Assert.AreEqual(127, bmpCarrierStream.Length);
 			}
 		}
 

@@ -8,6 +8,6 @@
 		/// <summary>
 		/// Carrier cluster stream name, used to identify different implementations of ICarrierClusterStream
 		/// </summary>
-		string Name { get; set; }
+		string Name { get; }
 	}
 }

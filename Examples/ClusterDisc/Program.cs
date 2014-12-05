@@ -16,14 +16,14 @@ namespace ClusterDisc
 		private static string CLUSTER_DISC_DIRECTORY = Path.Combine(
 			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ClusterFiles");
 
-		private static string CARRIER_STREAM_PLUGINS_DIRECTORY = Path.Combine(
-			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Plugins");
+		private static string CARRIER_STREAM_PROVIDER_DIRECTORY = Path.Combine(
+			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Providers");
 
 		private static string CLUSTER_FILENAME = "File";
 		
 		static void Main(string[] args)
 		{
-			ICarrierStreamFactory factory = new CarrierStreamFactory(CARRIER_STREAM_PLUGINS_DIRECTORY);
+			ICarrierStreamFactory factory = new CarrierStreamFactory(CARRIER_STREAM_PROVIDER_DIRECTORY);
 			using (Stream carrierClusterStream = factory.BuildClusterStream("Basic",
 				new OneKeySequence(), GetClusterFiles()))
 			{

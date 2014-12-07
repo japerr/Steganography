@@ -18,7 +18,7 @@ namespace Steganography.IO.Bmp
 		{
 			get
 			{
-				return (uint)DIBHeaderTypes.BITMAPV2INFOHEADER;
+				return (uint)HeaderType.BITMAPV2INFOHEADER;
 			}
 		}
 

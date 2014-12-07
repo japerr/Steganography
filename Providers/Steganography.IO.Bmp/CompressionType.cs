@@ -6,7 +6,7 @@
 	/// <remarks>
 	/// http://en.wikipedia.org/wiki/BMP_file_format#DIB_header_.28bitmap_information_header.29
 	/// </remarks>
-	internal enum CompressionTypes : uint
+	internal enum CompressionType : uint
 	{
 		BI_RGB = 0,
 		BI_RLE8 = 1,

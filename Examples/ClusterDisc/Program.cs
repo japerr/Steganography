@@ -1,13 +1,13 @@
-﻿using DiscUtils;
-using DiscUtils.Fat;
-using Steganography;
-using Steganography.IO;
-using Steganography.IO.Sequences;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using DiscUtils;
+using DiscUtils.Fat;
+using Steganography;
+using Steganography.IO;
+using Steganography.IO.Sequences;
 
 namespace ClusterDisc
 {
@@ -42,15 +42,15 @@ namespace ClusterDisc
 				{
 					carrierClusterStream.Position = 0;
 
-					Geometry geometry = Geometry.FromCapacity(carrierClusterStream.Length);
+					Geometry geometry = Geometry.FromCapacity(carrierClusterStream.Length - 512);
 					using (FatFileSystem fs = FatFileSystem.FormatPartition(carrierClusterStream,
 						string.Empty, geometry, 0, geometry.TotalSectors, 13))
 					{
 						DateTime start = DateTime.Now;
-						for (int i = 0; i < 100; ++i)
+						for (int i = 0; i < 511; ++i)
 							fs.CreateDirectory(@"D" + i);
 
-						Console.WriteLine("100 Directories created in {0}", DateTime.Now - start);
+						Console.WriteLine("511 Directories created in {0}", DateTime.Now - start);
 						foreach (DiscDirectoryInfo info in fs.Root.GetDirectories())
 							Console.WriteLine(info.FullName);
 
@@ -68,22 +68,40 @@ namespace ClusterDisc
 				Directory.CreateDirectory(CLUSTER_DISC_DIRECTORY);
 
 			IList<Stream> streams = new List<Stream>();
-			for (int i = 0; i < 3; ++i)
-			{
-				string fileName = Path.Combine(CLUSTER_DISC_DIRECTORY, CLUSTER_FILENAME + i + ".bin");
-				if(!File.Exists(fileName))
-				{
-					byte[] fileData = new byte[1439747];
-					//byte[] fileData = new byte[11184811];
-					fileData[0] = 0xEF;
-					fileData[1] = 0xBB;
-					fileData[2] = 0xBF;
 
-					File.WriteAllBytes(fileName, fileData);
+			string rgb16 = Path.Combine(CLUSTER_DISC_DIRECTORY, "rgb16-{0}.bmp");
+			for (int i = 0; i < 4500; ++i)
+			{
+				string file = string.Format(rgb16, i);
+				if (!File.Exists(file))
+				{
+					using (Stream resourceStream = Assembly.GetExecutingAssembly()
+						.GetManifestResourceStream("ClusterDisc.CarrierFiles.rgb16.bmp"))
+					using (FileStream fileStream = File.Create(file))
+					{
+						resourceStream.CopyTo(fileStream);
+					}
 				}
 
-				streams.Add(File.Open(fileName, FileMode.Open));
+				streams.Add(File.Open(file, FileMode.Open));
 			}
+
+			//for (int i = 0; i < 3; ++i)
+			//{
+			//	string fileName = Path.Combine(CLUSTER_DISC_DIRECTORY, CLUSTER_FILENAME + i + ".bin");
+			//	if (!File.Exists(fileName))
+			//	{
+			//		byte[] fileData = new byte[1439747];
+			//		//byte[] fileData = new byte[11184811];
+			//		fileData[0] = 0xEF;
+			//		fileData[1] = 0xBB;
+			//		fileData[2] = 0xBF;
+
+			//		File.WriteAllBytes(fileName, fileData);
+			//	}
+
+			//	streams.Add(File.Open(fileName, FileMode.Open));
+			//}
 
 			return streams;
 		}

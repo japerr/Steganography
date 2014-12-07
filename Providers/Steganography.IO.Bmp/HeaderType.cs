@@ -6,8 +6,20 @@
 	/// <remarks>
 	/// http://en.wikipedia.org/wiki/BMP_file_format#DIB_header_.28bitmap_information_header.29
 	/// </remarks>
-	internal enum DIBHeaderTypes : uint
+	internal enum HeaderType : ushort
 	{
+		/// <summary>
+		/// Windows 2.0 or later
+		/// OS/2 1.x[3]
+		/// </summary>
+		BITMAPCOREHEADER = 12,
+		/// <summary>
+		/// OS/2 OS22XBITMAPHEADER
+		/// </summary>
+		/// <remarks>
+		/// Adds halftoning. Adds RLE and Huffman 1D compression.
+		/// </remarks>
+		BITMAPCOREHEADER2 = 64,
 		/// <summary>
 		/// all Windows versions since Windows 3.0
 		/// </summary>

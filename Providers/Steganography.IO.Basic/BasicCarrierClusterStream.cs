@@ -106,10 +106,13 @@ namespace Steganography.IO.Basic
 			set
 			{
 				if (value > _length)
-					throw new Exception();
+					throw new InvalidOperationException(
+						string.Format("Attempted position {0} is longer than the length of the stream {1}", 
+							value, _length));
 
 				if (value < 0)
-					throw new Exception();
+					throw new InvalidOperationException(
+						string.Format("Attempted position {0} is less thank zero", value));
 								
 				_position = value;
 			}
